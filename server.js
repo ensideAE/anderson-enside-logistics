@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import axios from 'axios';
+import { appendToGoogleSheets, getSheetStats } from './sheets-sync.js';
 
 dotenv.config();
 
@@ -62,18 +63,18 @@ app.post('/api/submit-frete', async (req, res) => {
       timestamp
     });
 
-    // TODO: Integrar com Google Sheets API
-    // Por enquanto, apenas log
+    // Sync to Google Sheets
+    await appendToGoogleSheets(req.body);
     
-    // TODO: Enviar para Evolution API (WhatsApp)
-    // if (EVOLUTION_API_URL && EVOLUTION_API_TOKEN) {
-    //   await enviarWhatsApp(req.body);
-    // }
+    // Send to Evolution API (WhatsApp)
+    if (EVOLUTION_API_URL && EVOLUTION_API_TOKEN) {
+      enviarWhatsApp(req.body).catch(err => console.error('WhatsApp error:', err));
+    }
 
-    // TODO: Usar Groq para análise
-    // if (GROQ_API_KEY) {
-    //   await analisarComGroq(req.body);
-    // }
+    // Analyze with Groq
+    if (GROQ_API_KEY) {
+      analisarComGroq(req.body).catch(err => console.error('Groq error:', err));
+    }
 
     res.json({
       success: true,
@@ -92,7 +93,8 @@ app.post('/api/submit-frete', async (req, res) => {
 // Get statistics
 app.get('/api/stats', async (req, res) => {
   try {
-    res.json({
+    const stats = await getSheetStats();
+    res.json(stats || {
       total_fretes: 0,
       total_distancia: 0,
       total_valor: 0,
