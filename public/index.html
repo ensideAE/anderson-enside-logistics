@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚚 Anderson Enside - Calcular Frete</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      border: 3px solid #00ff00;
+      border-radius: 10px;
+      background: rgba(0, 255, 0, 0.05);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    }
+
+    .header h1 {
+      font-size: 32px;
+      color: #00ff00;
+      margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #00ff00;
+      opacity: 0.8;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00ff00;
+      font-weight: bold;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 12px;
+      border: 3px dashed #00ff00;
+      background: rgba(0, 0, 0, 0.5);
+      color: #00ff00;
+      border-radius: 5px;
+      font-size: 14px;
+      font-family: monospace;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: #ffff00;
+      box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+    }
+
+    select option {
+      background: #0a0e27;
+      color: #00ff00;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    button {
+      padding: 15px;
+      border: 3px solid #00ff00;
+      background: #00ff00;
+      color: #000000;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      font-family: monospace;
+    }
+
+    button:hover {
+      background: #00cc00;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+      transform: scale(1.02);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-clear {
+      background: transparent;
+      color: #00ff00;
+      border-color: #00ff00;
+    }
+
+    .btn-clear:hover {
+      background: rgba(0, 255, 0, 0.1);
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      border: 3px solid #ffff00;
+      border-radius: 5px;
+      background: rgba(255, 255, 0, 0.05);
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .result h3 {
+      color: #ffff00;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 0, 0.2);
+      color: #ffff00;
+    }
+
+    .result-item:last-child {
+      border-bottom: none;
+    }
+
+    .result-label {
+      font-weight: bold;
+    }
+
+    .result-value {
+      font-family: monospace;
+      font-weight: bold;
+    }
+
+    .total-price {
+      font-size: 24px;
+      color: #00ff00;
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      border: 2px solid #00ff00;
+      border-radius: 5px;
+      background: rgba(0, 255, 0, 0.1);
+    }
+
+    .error {
+      color: #ff3366;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      color: #00ff00;
+      font-style: italic;
+    }
+
+    .loading.show {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🚚 ANDERSON ENSIDE</h1>
+      <p>Calcule seu frete agora mesmo</p>
+    </div>
+
+    <form id="freteForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="estadoOrigem">ESTADO ORIGEM *</label>
+          <select id="estadoOrigem" required>
+            <option value="">Selecione um estado</option>
+          </select>
+          <div class="error" id="errorEstadoOrigem">Campo obrigatório</div>
+        </div>
+
+        <div class="form-group">
+          <label for="cidadeOrigem">CIDADE ORIGEM *</label>
+          <select id="cidadeOrigem" required>
+            <option value="">Selecione um estado primeiro</option>
+          </select>
+          <div class="error" id="errorCidadeOrigem">Campo obrigatório</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="estadoDestino">ESTADO DESTINO *</label>
+          <select id="estadoDestino" required>
+            <option value="">Selecione um estado</option>
+          </select>
+          <div class="error" id="errorEstadoDestino">Campo obrigatório</div>
+        </div>
+
+        <div class="form-group">
+          <label for="cidadeDestino">CIDADE DESTINO *</label>
+          <select id="cidadeDestino" required>
+            <option value="">Selecione um estado primeiro</option>
+          </select>
+          <div class="error" id="errorCidadeDestino">Campo obrigatório</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="precoKm">PREÇO POR KM (R$) *</label>
+          <input type="number" id="precoKm" placeholder="Ex: 8.50" step="0.01" min="0" required>
+          <div class="error" id="errorPrecoKm">Campo obrigatório</div>
+        </div>
+
+        <div class="form-group">
+          <label for="peso">PESO (TONELADAS) *</label>
+          <input type="number" id="peso" placeholder="Ex: 25" step="0.01" min="0" required>
+          <div class="error" id="errorPeso">Campo obrigatório</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="distancia">DISTÂNCIA (KM)</label>
+          <input type="number" id="distancia" placeholder="Será calculada automaticamente" readonly>
+          <div class="loading" id="loadingDistancia">⏳ Calculando distância...</div>
+        </div>
+
+        <div class="form-group">
+          <label for="preco">PREÇO (R$)</label>
+          <input type="number" id="preco" placeholder="Será calculado automaticamente" readonly>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button type="button" id="calcularBtn">🔍 CALCULAR FRETE</button>
+        <button type="button" id="limparBtn" class="btn-clear">🔄 LIMPAR</button>
+      </div>
+    </form>
+
+    <div class="result" id="resultado">
+      <h3>📊 Resultado do Cálculo</h3>
+      <div class="result-item">
+        <span class="result-label">📍 Origem:</span>
+        <span class="result-value" id="resultOrigem">-</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">📍 Destino:</span>
+        <span class="result-value" id="resultDestino">-</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">📏 Distância:</span>
+        <span class="result-value" id="resultDistancia">-</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">⚖️ Peso:</span>
+        <span class="result-value" id="resultPeso">-</span>
+      </div>
+      <div class="result-item">
+        <span class="result-label">💰 Preço/KM:</span>
+        <span class="result-value" id="resultPrecoKm">-</span>
+      </div>
+      <div class="total-price">
+        💵 VALOR TOTAL DO FRETE: R$ <span id="resultPrecoTotal">0,00</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPewC8-aAPVwb_Y4hclh1JCJLCmGJw5Qw"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

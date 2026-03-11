@@ -1,0 +1,31 @@
+const estadosCidades = {
+  'AC': ['Rio Branco', 'Cruzeiro do Sul', 'Xapuri', 'Brasiléia', 'Sena Madureira', 'Tarauacá', 'Feijó', 'Plácido de Castro', 'Acrelândia', 'Assis Brasil'],
+  'AL': ['Maceió', 'Arapiraca', 'Rio Largo', 'Marechal Deodoro', 'Palmeira dos Índios', 'Delmiro Gouveia', 'São Miguel dos Campos', 'Penedo', 'Pilar', 'Atalaia'],
+  'AP': ['Macapá', 'Santana', 'Laranjal do Jari', 'Oiapoque', 'Amapá', 'Calçoene', 'Tartarugalba', 'Pracuúba', 'Vitória do Jari', 'Pedra Branca'],
+  'AM': ['Manaus', 'Parintins', 'Itacoatiara', 'Manacapuru', 'Coari', 'Humaitá', 'Tefé', 'Maués', 'Tabatinga', 'Benjamin Constant'],
+  'BA': ['Salvador', 'Feira de Santana', 'Vitória da Conquista', 'Camaçari', 'Jequié', 'Lauro de Freitas', 'Ilhéus', 'Itabuna', 'Barreiras', 'Santo Estêvão'],
+  'CE': ['Fortaleza', 'Caucaia', 'Juazeiro do Norte', 'Maracanaú', 'Sobral', 'Crato', 'Iguatu', 'Quixadá', 'Russas', 'Tianguá'],
+  'DF': ['Brasília', 'Taguatinga', 'Samambaia', 'Planaltina', 'Santa Maria', 'Gama', 'Guará', 'Sobradinho', 'Paranoá', 'Ceilândia'],
+  'ES': ['Vitória', 'Vila Velha', 'Serra', 'Cariacica', 'Linhares', 'Aracruz', 'Colatina', 'Cachoeiro de Itapemirim', 'Marataízes', 'Anchieta'],
+  'GO': ['Goiânia', 'Aparecida de Goiânia', 'Anápolis', 'Rio Verde', 'Luziânia', 'Águas Lindas de Goiás', 'Trindade', 'Formosa', 'Catalão', 'Jataí'],
+  'MA': ['São Luís', 'Imperatriz', 'Timon', 'Caxias', 'Codó', 'Bacabal', 'Balsas', 'Açailândia', 'Paço do Lumiar', 'Chapadinha'],
+  'MT': ['Cuiabá', 'Várzea Grande', 'Rondonópolis', 'Sinop', 'Tangará da Serra', 'Cáceres', 'Primavera do Leste', 'Lucas do Rio Verde', 'Sorriso', 'Barra do Garças'],
+  'MS': ['Campo Grande', 'Dourados', 'Três Lagoas', 'Corumbá', 'Maracaju', 'Naviraí', 'Ponta Porã', 'Aquidauana', 'Nova Andradina', 'Paranaíba'],
+  'MG': ['Belo Horizonte', 'Uberlândia', 'Contagem', 'Juiz de Fora', 'Betim', 'Montes Claros', 'Ribeirão das Neves', 'Uberaba', 'Governador Valadares', 'Ipatinga'],
+  'PA': ['Belém', 'Ananindeua', 'Santarém', 'Marabá', 'Castanhal', 'Parauapebas', 'Cametá', 'Altamira', 'Itaituba', 'Breves'],
+  'PB': ['João Pessoa', 'Campina Grande', 'Santa Rita', 'Patos', 'Sousa', 'Guarabira', 'Cabedelo', 'Pombal', 'Areia', 'Itaporanga'],
+  'PR': ['Curitiba', 'Londrina', 'Maringá', 'Ponta Grossa', 'Cascavel', 'São José dos Pinhais', 'Foz do Iguaçu', 'Colombo', 'Jacarezinho', 'Paranaguá'],
+  'PE': ['Recife', 'Jaboatão dos Guararapes', 'Olinda', 'Caruaru', 'Petrolina', 'Paulista', 'Camaragibe', 'Garanhuns', 'Igarassu', 'Vitória de Santo Antão'],
+  'PI': ['Teresina', 'Parnaíba', 'Picos', 'Piripiri', 'Floriano', 'Campo Maior', 'Oeiras', 'União', 'Altos', 'Esperantina'],
+  'RJ': ['Rio de Janeiro', 'Niterói', 'São Gonçalo', 'Duque de Caxias', 'Nova Iguaçu', 'São João de Meriti', 'Campos dos Goytacazes', 'Macaé', 'Itaboraí', 'Mesquita'],
+  'RN': ['Natal', 'Mossoró', 'Parnamirim', 'Assu', 'Ceará-Mirim', 'Caicó', 'Macau', 'Currais Novos', 'Apodi', 'Açu'],
+  'RS': ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Santa Maria', 'Gravataí', 'Viamão', 'Novo Hamburgo', 'São Leopoldo', 'Alvorada', 'Sapucaia do Sul'],
+  'RO': ['Porto Velho', 'Ji-Paraná', 'Ariquemes', 'Vilhena', 'Cacoal', 'Jaru', 'Ouro Preto do Oeste', 'Buritis', 'Costa Marques', 'Rolim de Moura'],
+  'RR': ['Boa Vista', 'Rorainópolis', 'Caracaraí', 'Mucajaí', 'Iracema', 'Cantá', 'Pacaraima', 'Bonfim', 'Normandia', 'São João da Baliza'],
+  'SC': ['Joinville', 'Blumenau', 'Florianópolis', 'Itajaí', 'Brusque', 'Chapecó', 'Criciúma', 'Lages', 'Jaraguá do Sul', 'Palhoça'],
+  'SP': ['São Paulo', 'Guarulhos', 'Campinas', 'São Bernardo do Campo', 'Santo André', 'Osasco', 'Sorocaba', 'Ribeirão Preto', 'Santos', 'Piracicaba'],
+  'SE': ['Aracaju', 'Nossa Senhora do Socorro', 'Lagarto', 'São Cristóvão', 'Itabaiana', 'Estância', 'Simão Dias', 'Tobias Barreto', 'Propriá', 'Poço Redondo'],
+  'TO': ['Palmas', 'Araguaína', 'Gurupi', 'Porto Nacional', 'Tocantinópolis', 'Paraíso do Tocantins', 'Dianópolis', 'Natividade', 'Miracema do Tocantins', 'Colinas do Tocantins']
+};
+
+const estados = Object.keys(estadosCidades).sort();
